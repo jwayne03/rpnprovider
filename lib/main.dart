@@ -15,13 +15,15 @@ void main() => runApp(
     );
 
 class MyApp extends StatelessWidget {
+  SettingsProvier settingsProvier;
   @override
   Widget build(BuildContext context) {
+    settingsProvier = Provider.of<SettingsProvier>(context);
     return MaterialApp(
       title: 'RPN Calculator',
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-        accentColor: Colors.blue,
+        primarySwatch: settingsProvier.colorTheme,
+        accentColor: settingsProvier.colorTheme,
       ),
       home: HomePage(),
     );

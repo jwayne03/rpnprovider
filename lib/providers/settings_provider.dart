@@ -5,6 +5,7 @@ class SettingsProvier extends ChangeNotifier {
   bool _isTrigonometricsHidden = false;
   bool _isChangeTheFontSizeActive = false;
   double _fontSizeValue = 0;
+  Color _colorTheme;
 
   bool get isActionBarHidden => _isActionBarHidden;
   set isActionBarHidden(bool isHidden) {
@@ -27,6 +28,12 @@ class SettingsProvier extends ChangeNotifier {
   double get fontSizeValue => _fontSizeValue;
   set fontSizeValue(double value) {
     _fontSizeValue = value;
+    notifyListeners();
+  }
+
+  Color get colorTheme => _colorTheme;
+  set colorTheme(Color color) {
+    _colorTheme = color;
     notifyListeners();
   }
 }
