@@ -5,6 +5,7 @@ import 'package:rpn/providers/settings_provider.dart';
 
 import 'package:rpn/view/rpn_calculator.dart';
 import 'package:rpn/view/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ResultsScreen extends StatefulWidget {
   @override
@@ -15,11 +16,21 @@ class _ResultsScreenState extends State<ResultsScreen> {
   SettingsProvier settingsProvier;
   Settings settings = Settings();
   ScrollController _scrollController;
+  double fontSize;
+
+  SharedPreferences sharedPreferences;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
+    getSharedPrefs();
+  }
+
+  Future<Null> getSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    fontSize = prefs.getDouble("fontSize") ?? 16.0;
+    setState(() {});
   }
 
   @override
@@ -79,7 +90,10 @@ class _ResultsScreenState extends State<ResultsScreen> {
                 ),
                 Text(
                   text,
-                  style: TextStyle(fontSize: 22.0),
+                  style: TextStyle(
+                      fontSize: settingsProvier.isChangeTheFontSizeActive
+                          ? settingsProvier.fontSizeValue
+                          : 16.0),
                 ),
               ],
             ),

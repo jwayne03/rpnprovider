@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:rpn/providers/settings_provider.dart';
 import 'package:rpn/widget/results_screen.dart';
 import 'package:rpn/view/settings.dart';
+import 'package:toast/toast.dart';
 
 import '../widget/keypad.dart';
 import 'key_definition.dart';
@@ -62,6 +63,9 @@ class _HomePageState extends State<HomePage> {
           } else if (index == 1) {
             if (!settingsProvier.isTrigonometricsHidden) {
               setState(() => _currentPageIndex = index);
+            } else {
+              Toast.show("Disabled", context,
+                  duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
             }
           } else {
             Navigator.push(context,

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvier extends ChangeNotifier {
   bool _isActionBarHidden = false;
   bool _isTrigonometricsHidden = false;
   bool _isChangeTheFontSizeActive = false;
-  double _fontSizeValue = 0;
+  double _fontSizeValue = 1;
   Color _colorTheme;
+
+  SharedPreferences sharedPreferences;
 
   bool get isActionBarHidden => _isActionBarHidden;
   set isActionBarHidden(bool isHidden) {
@@ -28,6 +31,8 @@ class SettingsProvier extends ChangeNotifier {
   double get fontSizeValue => _fontSizeValue;
   set fontSizeValue(double value) {
     _fontSizeValue = value;
+    SharedPreferences.getInstance()
+        .then((value) => value.setDouble("fontSize", fontSizeValue));
     notifyListeners();
   }
 

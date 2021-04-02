@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:rpn/providers/settings_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -10,10 +11,11 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   SettingsProvier settingsProvier;
+  SharedPreferences sharedPreferences;
 
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
-  int _valueHolder = 20;
+  int _valueHolder = 12;
   int get valueHolder => _valueHolder;
 
   @override
@@ -45,27 +47,26 @@ class _SettingsState extends State<Settings> {
               },
             ),
             SwitchListTile(
-                activeColor: Colors.lightBlue,
-                value: settingsProvier.isChangeTheFontSizeActive,
-                title: Text("Change font of results screen"),
-                onChanged: (bool value) {
-                  settingsProvier.isChangeTheFontSizeActive = value;
-                }),
+              activeColor: Colors.lightBlue,
+              value: settingsProvier.isChangeTheFontSizeActive,
+              title: Text("Change font of results screen"),
+              onChanged: (bool value) {
+                settingsProvier.isChangeTheFontSizeActive = value;
+              },
+            ),
             settingsProvier.isChangeTheFontSizeActive
                 ? Column(
                     children: [
                       Slider(
-                        value: _valueHolder.toDouble(),
+                        value: settingsProvier.fontSizeValue,
                         min: 1,
-                        max: 24,
+                        max: 30,
                         divisions: 100,
                         activeColor: Colors.lightBlue,
                         inactiveColor: Colors.grey,
-                        label: '${_valueHolder.round()}',
+                        label: '${settingsProvier.fontSizeValue}',
                         onChanged: (double newValue) {
-                          setState(() {
-                            _valueHolder = newValue.round();
-                          });
+                          settingsProvier.fontSizeValue = newValue;
                         },
                         semanticFormatterCallback: (double newValue) {
                           return '${newValue.round()}';
@@ -120,5 +121,11 @@ class _SettingsState extends State<Settings> {
 
   void changeColor(Color color) {
     setState(() => pickerColor = color);
+    print(currentColor);
+  }
+
+  void _saveFontSize(double fontSize) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('fontSize', fontSize);
   }
 }
