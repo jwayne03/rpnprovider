@@ -17,6 +17,9 @@ class _SettingsState extends State<Settings> {
   Color currentColor = Color(0xff443a49);
   int _valueHolder = 12;
   int get valueHolder => _valueHolder;
+  bool isChangeTheColor = false;
+
+  Color get color => null;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class _SettingsState extends State<Settings> {
         child: Column(
           children: [
             SwitchListTile(
-              activeColor: Colors.lightBlue,
+              activeColor: Theme.of(context).primaryColor,
               value: settingsProvier.isActionBarHidden,
               title: Text("Hide action bar"),
               onChanged: (bool value) {
@@ -39,7 +42,7 @@ class _SettingsState extends State<Settings> {
               },
             ),
             SwitchListTile(
-              activeColor: Colors.lightBlue,
+              activeColor: Theme.of(context).primaryColor,
               value: settingsProvier.isTrigonometricsHidden,
               title: Text("Hide Trigonometrics"),
               onChanged: (bool value) {
@@ -47,7 +50,7 @@ class _SettingsState extends State<Settings> {
               },
             ),
             SwitchListTile(
-              activeColor: Colors.lightBlue,
+              activeColor: Theme.of(context).primaryColor,
               value: settingsProvier.isChangeTheFontSizeActive,
               title: Text("Change font of results screen"),
               onChanged: (bool value) {
@@ -62,7 +65,7 @@ class _SettingsState extends State<Settings> {
                         min: 1,
                         max: 30,
                         divisions: 100,
-                        activeColor: Colors.lightBlue,
+                        activeColor: Theme.of(context).primaryColor,
                         inactiveColor: Colors.grey,
                         label: '${settingsProvier.fontSizeValue}',
                         onChanged: (double newValue) {
@@ -88,6 +91,18 @@ class _SettingsState extends State<Settings> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
+                      actions: <Widget>[
+                        FlatButton(
+                          child: const Text('Got it'),
+                          onPressed: () {
+                            setState(() {
+                              currentColor = pickerColor;
+                              settingsProvier.colorTheme = currentColor;
+                            });
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
                       titlePadding: const EdgeInsets.all(0.0),
                       contentPadding: const EdgeInsets.all(0.0),
                       content: SingleChildScrollView(
@@ -111,7 +126,7 @@ class _SettingsState extends State<Settings> {
                 );
               },
               child: const Text("Change color"),
-              color: Colors.lightBlueAccent,
+              color: Theme.of(context).primaryColor,
             ),
           ],
         ),
@@ -120,7 +135,9 @@ class _SettingsState extends State<Settings> {
   }
 
   void changeColor(Color color) {
-    setState(() => pickerColor = color);
+    setState(() {
+      pickerColor = color;
+    });
     print(currentColor);
   }
 

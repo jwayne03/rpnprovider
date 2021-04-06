@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'RPN Calculator',
       theme: ThemeData(
-        primarySwatch: settingsProvier.colorTheme,
+        primaryColor: settingsProvier.colorTheme,
         accentColor: settingsProvier.colorTheme,
       ),
       home: HomePage(),

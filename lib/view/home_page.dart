@@ -17,6 +17,8 @@ class _HomePageState extends State<HomePage> {
   SettingsProvier settingsProvier;
   int _currentPageIndex;
 
+  //Color colorTheme = settingsProvier.colorTheme;
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     settingsProvier = Provider.of<SettingsProvier>(context);
+    Color color = Theme.of(context).primaryColor;
     if (_currentPageIndex == 1 && settingsProvier.isTrigonometricsHidden) {
       setState(() => _currentPageIndex = 0);
     }
@@ -95,109 +98,152 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  static const List<KeyDefinition> KEYPAD_HOME = [
+  // ignore: non_constant_identifier_names
+  List<KeyDefinition> KEYPAD_HOME = [
     KeyDefinition(
-        text: "Clear", op: "clear", fontFactor: 0.5, color: Colors.lightBlue),
+      text: "Clear",
+      op: "clear",
+      fontFactor: 0.5,
+      color: Colors.grey.shade600,
+    ),
     KeyDefinition(
         iconData: Icons.swap_vert,
         op: "swap",
         fontFactor: 1.0,
-        color: Colors.lightBlue),
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "%", op: "percent", fontFactor: 1.0, color: Colors.lightBlue),
+        text: "%", op: "percent", fontFactor: 1.0, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "±", op: "pm", fontFactor: 1.0, color: Colors.lightBlue),
+        text: "±", op: "pm", fontFactor: 1.0, color: Colors.grey.shade600),
     KeyDefinition(
         iconData: Icons.backspace,
         op: "back",
         fontFactor: 0.9,
-        color: Colors.lightBlue),
-    KeyDefinition(text: "7", op: "7", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "8", op: "8", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "9", op: "9", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "+", op: "+", fontFactor: 1.0, color: Colors.lightBlue),
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "√", op: "sqrt", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "4", op: "4", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "5", op: "5", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "6", op: "6", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "-", op: "-", fontFactor: 1.0, color: Colors.lightBlue),
+        text: "7", op: "7", fontFactor: 1.0, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "x²", op: "square", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "1", op: "1", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "2", op: "2", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: "3", op: "3", fontFactor: 1.0, color: Colors.lightBlue),
+        text: "8", op: "8", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "9", op: "9", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "+", op: "+", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "√", op: "sqrt", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "4", op: "4", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "5", op: "5", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "6", op: "6", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "-", op: "-", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "x²", op: "square", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "1", op: "1", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "2", op: "2", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "3", op: "3", fontFactor: 1.0, color: Colors.grey.shade600),
     KeyDefinition(
         iconData: Icons.close,
         op: "*",
         fontFactor: 1.0,
-        color: Colors.lightBlue),
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "xʸ", op: "pow", fontFactor: 0.65, color: Colors.lightBlue),
-    KeyDefinition(text: "0", op: "0", fontFactor: 1.0, color: Colors.lightBlue),
-    KeyDefinition(text: ".", op: ".", fontFactor: 1.0, color: Colors.lightBlue),
+        text: "xʸ", op: "pow", fontFactor: 0.65, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "0", op: "0", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: ".", op: ".", fontFactor: 1.0, color: Colors.grey.shade600),
     KeyDefinition(
         iconData: Icons.subdirectory_arrow_left,
         op: "enter",
         fontFactor: 1.0,
-        color: Colors.lightBlue),
-    KeyDefinition(text: "/", op: "/", fontFactor: 1.0, color: Colors.lightBlue),
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "1/x", op: "recip", fontFactor: 0.65, color: Colors.lightBlue),
+        text: "/", op: "/", fontFactor: 1.0, color: Colors.grey.shade600),
+    KeyDefinition(
+        text: "1/x",
+        op: "recip",
+        fontFactor: 0.65,
+        color: Colors.grey.shade600),
   ];
 
-  static const List<KeyDefinition> KEYPAD_TRIGONOMETRICS = [
+  List<KeyDefinition> KEYPAD_TRIGONOMETRICS = [
     KeyDefinition(
-        text: "π", op: "pi", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "π", op: "pi", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "π²", op: "pi2", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "π²", op: "pi2", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "2π", op: "2pi", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "2π", op: "2pi", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
         text: "DEG\nto\nRAD",
         op: "d>r",
         fontFactor: 0.4,
-        color: Colors.lightBlue),
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "sin", op: "sin", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "sin", op: "sin", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "cos", op: "cos", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "cos", op: "cos", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "tan", op: "tan", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "tan", op: "tan", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
         text: "RAD\nto\nDEG",
         op: "r>d",
         fontFactor: 0.4,
-        color: Colors.lightBlue),
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "sin⁻¹", op: "asin", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "sin⁻¹",
+        op: "asin",
+        fontFactor: 0.6,
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "cos⁻¹", op: "acos", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "cos⁻¹",
+        op: "acos",
+        fontFactor: 0.6,
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "tan⁻¹", op: "atan", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "tan⁻¹",
+        op: "atan",
+        fontFactor: 0.6,
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "tan'⁻¹", op: "atan2", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "tan'⁻¹",
+        op: "atan2",
+        fontFactor: 0.6,
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "sinh", op: "sinh", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "sinh", op: "sinh", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "cosh", op: "cosh", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "cosh", op: "cosh", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
-        text: "tanh", op: "tanh", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "tanh", op: "tanh", fontFactor: 0.6, color: Colors.grey.shade600),
     KeyDefinition(
         text: "RECT\nto\nPOL",
         op: "r>p",
         fontFactor: 0.4,
-        color: Colors.lightBlue),
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "sinh⁻¹", op: "asinh", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "sinh⁻¹",
+        op: "asinh",
+        fontFactor: 0.6,
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "cosh⁻¹", op: "acosh", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "cosh⁻¹",
+        op: "acosh",
+        fontFactor: 0.6,
+        color: Colors.grey.shade600),
     KeyDefinition(
-        text: "tanh⁻¹", op: "atanh", fontFactor: 0.6, color: Colors.lightBlue),
+        text: "tanh⁻¹",
+        op: "atanh",
+        fontFactor: 0.6,
+        color: Colors.grey.shade600),
     KeyDefinition(
         text: "POL\nto\nRECT",
         op: "p>r",
         fontFactor: 0.4,
-        color: Colors.lightBlue),
+        color: Colors.grey.shade600),
   ];
 }

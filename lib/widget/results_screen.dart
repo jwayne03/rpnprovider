@@ -49,9 +49,9 @@ class _ResultsScreenState extends State<ResultsScreen> {
       width: double.infinity,
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Colors.lightBlue.shade100,
+        color: settingsProvier.colorTheme,
         border: Border.all(
-          color: Theme.of(context).accentColor,
+          color: Colors.black,
           width: 2.0,
         ),
       ),
@@ -81,12 +81,12 @@ class _ResultsScreenState extends State<ResultsScreen> {
                         fontSize: settingsProvier.isChangeTheFontSizeActive
                             ? settingsProvier.fontSizeValue
                             : 16.0,
-                        color: Theme.of(context).accentColor),
+                        color: Colors.black),
                   ),
                 ),
                 Icon(
                   Icons.chevron_right,
-                  color: Theme.of(context).accentColor,
+                  color: Colors.black,
                 ),
                 Text(
                   text,
