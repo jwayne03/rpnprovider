@@ -39,6 +39,7 @@ class _SettingsState extends State<Settings> {
               title: Text("Hide action bar"),
               onChanged: (bool value) {
                 settingsProvier.isActionBarHidden = value;
+                settingsProvier.saveActionBar();
               },
             ),
             SwitchListTile(
@@ -47,6 +48,7 @@ class _SettingsState extends State<Settings> {
               title: Text("Hide Trigonometrics"),
               onChanged: (bool value) {
                 settingsProvier.isTrigonometricsHidden = value;
+                settingsProvier.saveTrigonometricsState();
               },
             ),
             SwitchListTile(
@@ -55,6 +57,7 @@ class _SettingsState extends State<Settings> {
               title: Text("Change font of results screen"),
               onChanged: (bool value) {
                 settingsProvier.isChangeTheFontSizeActive = value;
+                settingsProvier.saveFontSizeState();
               },
             ),
             settingsProvier.isChangeTheFontSizeActive
@@ -70,6 +73,7 @@ class _SettingsState extends State<Settings> {
                         label: '${settingsProvier.fontSizeValue}',
                         onChanged: (double newValue) {
                           settingsProvier.fontSizeValue = newValue;
+                          settingsProvier.saveFontSizeValue();
                         },
                         semanticFormatterCallback: (double newValue) {
                           return '${newValue.round()}';
@@ -88,16 +92,19 @@ class _SettingsState extends State<Settings> {
               elevation: 3.0,
               onPressed: () {
                 showDialog(
+                  barrierDismissible: false,
+                  barrierColor: Colors.transparent,
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
                       actions: <Widget>[
                         FlatButton(
-                          child: const Text('Got it'),
+                          child: const Text('Save color'),
                           onPressed: () {
                             setState(() {
                               currentColor = pickerColor;
                               settingsProvier.colorTheme = currentColor;
+                              settingsProvier.saveCurrentColorTheme();
                             });
                             Navigator.of(context).pop();
                           },
@@ -111,7 +118,7 @@ class _SettingsState extends State<Settings> {
                           onColorChanged: changeColor,
                           colorPickerWidth: 300.0,
                           pickerAreaHeightPercent: 0.7,
-                          enableAlpha: true,
+                          enableAlpha: false,
                           displayThumbColor: true,
                           showLabel: true,
                           paletteType: PaletteType.hsv,
