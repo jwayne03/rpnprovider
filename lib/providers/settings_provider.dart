@@ -11,10 +11,11 @@ class SettingsProvier extends ChangeNotifier {
   SharedPreferences _sharedPreferences;
 
   SettingsProvier() {
-    this.loadActionBarState();
-    this.loadFontSizeState();
-    this.loadFontSizeValue();
-    this.loadTrigonometricsState();
+    this._loadActionBarState();
+    this._loadFontSizeState();
+    this._loadFontSizeValue();
+    this._loadTrigonometricsState();
+    this._loadCurrentColor();
   }
 
   // ACTION BAR
@@ -24,7 +25,7 @@ class SettingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadActionBarState() async {
+  void _loadActionBarState() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._isActionBarHidden =
         this._sharedPreferences.getBool("actionBar") ?? false;
@@ -44,7 +45,7 @@ class SettingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadTrigonometricsState() async {
+  void _loadTrigonometricsState() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._isTrigonometricsHidden =
         this._sharedPreferences.getBool("trigonometrics") ?? false;
@@ -64,7 +65,7 @@ class SettingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadFontSizeState() async {
+  void _loadFontSizeState() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._isChangeTheFontSizeActive =
         this._sharedPreferences.getBool("activeFontSize") ?? false;
@@ -93,7 +94,7 @@ class SettingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadFontSizeValue() async {
+  void _loadFontSizeValue() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._fontSizeValue = this._sharedPreferences.getDouble("fontSize") ?? 16.0;
     notifyListeners();
@@ -106,7 +107,7 @@ class SettingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void loadCurrentColor() async {
+  void _loadCurrentColor() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._colorTheme = Color(
         this._sharedPreferences.getInt("color") ?? Colors.lightBlue.value);

@@ -34,9 +34,11 @@ class _HomePageState extends State<HomePage> {
     }
     print("HomePage build()");
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("RPN Calculator"),
-      // ),
+      appBar: settingsProvier.isActionBarHidden
+          ? null
+          : AppBar(
+              title: Text("RPN Calculator"),
+            ),
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
