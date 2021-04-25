@@ -14,6 +14,8 @@ dependencies:
   flutter_colorpicker: ^0.3.4
   shared_preferences: '>=0.5.12+2 <2.0.0'
   toast : ^0.1.5
+  http: 
+  crypto:
   
 dev_dependencies:
   flutter_test:

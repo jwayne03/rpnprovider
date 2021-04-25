@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rpn/providers/settings_provider.dart';
+import 'package:rpn/view/login.dart';
 import 'package:rpn/widget/results_screen.dart';
 import 'package:rpn/view/settings.dart';
 import 'package:toast/toast.dart';
@@ -73,8 +74,13 @@ class _HomePageState extends State<HomePage> {
                   duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
             }
           } else {
-            Navigator.push(context,
-                new MaterialPageRoute(builder: (context) => new Settings()));
+            if (settingsProvier.userToken == null) {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => new Login()));
+            } else {
+              Navigator.push(context,
+                  new MaterialPageRoute(builder: (context) => new Settings()));
+            }
           }
         },
         items: [

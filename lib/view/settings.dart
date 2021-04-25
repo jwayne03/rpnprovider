@@ -88,6 +88,8 @@ class _SettingsState extends State<Settings> {
                     maintainState: true,
                     visible: false,
                   ),
+            // Raisedbutton is deprecate and I'll change it
+            // This raisedbutton is a button to make the pop-up of the color picker
             RaisedButton(
               elevation: 3.0,
               onPressed: () {
@@ -97,10 +99,14 @@ class _SettingsState extends State<Settings> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
+                      // Pop-up of color picker
                       actions: <Widget>[
                         FlatButton(
                           child: const Text('Save color'),
                           onPressed: () {
+                            // Save the color that the user has picked up and
+                            // save in sharedprefences
+                            // and notifylistener to the provider
                             setState(() {
                               currentColor = pickerColor;
                               settingsProvier.colorTheme = currentColor;
@@ -146,10 +152,5 @@ class _SettingsState extends State<Settings> {
       pickerColor = color;
     });
     print(currentColor);
-  }
-
-  void _saveFontSize(double fontSize) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setDouble('fontSize', fontSize);
   }
 }
