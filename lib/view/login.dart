@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rpn/model/configuration_settings.dart';
+import 'package:rpn/api/configuration_settings.dart';
 import 'package:rpn/providers/settings_provider.dart';
 import 'package:rpn/view/settings.dart';
 import 'package:toast/toast.dart';

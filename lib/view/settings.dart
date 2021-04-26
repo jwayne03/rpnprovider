@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import 'package:rpn/providers/settings_provider.dart';
+import 'package:rpn/view/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Settings extends StatefulWidget {
@@ -141,6 +142,39 @@ class _SettingsState extends State<Settings> {
               child: const Text("Change color"),
               color: Theme.of(context).primaryColor,
             ),
+            RaisedButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      content: Text("Do you want to unsubscribe?"),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: const Text('Yes'),
+                          onPressed: () {
+                            settingsProvier.userToken = null;
+                            settingsProvier.saveToken(null);
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                    builder: (context) => HomePage()));
+                          },
+                        ),
+                        FlatButton(
+                          child: const Text('No'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              child: const Text("Unsubscribe"),
+              color: Theme.of(context).primaryColor,
+            )
           ],
         ),
       ),
