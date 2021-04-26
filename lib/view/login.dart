@@ -94,22 +94,20 @@ class _LoginState extends State<Login> {
                 onPressed: () async {
                   Toast.show("Checking the information...", context,
                       duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
-                  bool isLogged = await configurationSettings.login(
+                  String token = await configurationSettings.login(
                       usernameController.text, passwordController.text);
-                  isLogged
-                      ? CircularProgressIndicator()
-                      : setState(() {
-                          if (isLogged) {
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (_) => Settings()));
-                          } else {
-                            Toast.show(
-                                "Username or Password incorrect, please try again.",
-                                context,
-                                duration: Toast.LENGTH_LONG,
-                                gravity: Toast.BOTTOM);
-                          }
-                        });
+                  print(token);
+                  if (token != null) {
+                    settingsProvier.saveToken(token);
+                    Navigator.pushReplacement(
+                        context, MaterialPageRoute(builder: (_) => Settings()));
+                  } else {
+                    Toast.show(
+                        "Username or Password incorrect, please try again.",
+                        context,
+                        duration: Toast.LENGTH_LONG,
+                        gravity: Toast.BOTTOM);
+                  }
                 },
                 child: Text(
                   'Login',

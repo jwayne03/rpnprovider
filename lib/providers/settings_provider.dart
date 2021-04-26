@@ -146,9 +146,9 @@ class SettingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void saveToken() async {
+  void saveToken(String token) async {
     this._sharedPreferences = await SharedPreferences.getInstance();
-    this._sharedPreferences.setString("token", this._userToken);
+    this._sharedPreferences.setString("token", token);
     notifyListeners();
   }
 }
