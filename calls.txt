@@ -1,0 +1,31 @@
+http.get("https://api.flx.cat/users/user/token/refresh", body: {
+  "username": "...",
+  "password": "..."
+});
+
+=> JSON
+{
+  "token": "......."
+}
+
+
+
+http.get("https://api.flx.cat/users/setting", headers: {
+  "Authorization": "Bearer ...token...",
+});  => JSON [ array de settings ]
+
+
+http.post("https://api.flx.cat/users/setting", headers: {
+  "Authorization": "Bearer ...token...",
+}, body: {
+  "name": "trigonometrics",
+  "value": "false",
+});  => JSON { setting }
+
+
+http.patch("https://api.flx.cat/users/setting/trigonometrics", headers: {
+  "Authorization": "Bearer ...token...",
+}, body: {
+  "value": "true",
+});  => JSON { setting }
+

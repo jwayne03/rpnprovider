@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rpn/api/configuration_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvier extends ChangeNotifier {
@@ -10,6 +11,7 @@ class SettingsProvier extends ChangeNotifier {
   String _userToken = "";
 
   SharedPreferences _sharedPreferences;
+  ConfigurationSettings configurationSettings;
 
   // This constructor of calls to the methods of the sharedpreferences and their
   // methods are in private just in case
@@ -39,8 +41,8 @@ class SettingsProvier extends ChangeNotifier {
 
   // save the state of the actionbar with sharedpreferences
   void saveActionBar() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    _sharedPreferences.setBool("actionBar", this._isActionBarHidden) as bool;
+    this._isActionBarHidden = (await configurationSettings.saveUserSettings(
+        "actionBar", this._isActionBarHidden.toString(), userToken)) as bool;
     notifyListeners();
   }
 
@@ -54,15 +56,16 @@ class SettingsProvier extends ChangeNotifier {
   // load state of the trigonometrics if it's hidden or not with sharedpreferences
   void _loadTrigonometricsState() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
-    this._isTrigonometricsHidden =
-        this._sharedPreferences.getBool("trigonometrics") ?? false;
+    _sharedPreferences.setBool(
+        "trigonometrics", this._isChangeTheFontSizeActive) as bool;
     notifyListeners();
   }
 
   // save the state of trigonometrics with sharedpreferences
   void saveTrigonometricsState() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    _sharedPreferences.setBool("trigonometrics", this._isTrigonometricsHidden);
+    this._isTrigonometricsHidden =
+        (await configurationSettings.saveUserSettings("trigonometrics",
+            this._isTrigonometricsHidden.toString(), userToken)) as bool;
     notifyListeners();
   }
 
@@ -75,17 +78,14 @@ class SettingsProvier extends ChangeNotifier {
 
   // Load the value of the fontsize state with sharedpreferences
   void _loadFontSizeState() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    this._isChangeTheFontSizeActive =
-        this._sharedPreferences.getBool("activeFontSize") ?? false;
     notifyListeners();
   }
 
   // Safe the fontsize state switch with sharedpreferences
   void saveFontSizeState() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    _sharedPreferences.setBool(
-        "activeFontSize", this._isChangeTheFontSizeActive) as bool;
+    this._isChangeTheFontSizeActive =
+        (await configurationSettings.saveUserSettings("isFontSizeActive",
+            this._isChangeTheFontSizeActive.toString(), userToken)) as bool;
     notifyListeners();
   }
 
@@ -100,8 +100,8 @@ class SettingsProvier extends ChangeNotifier {
 
   // Save fontsize value with the sharedpreferences
   void saveFontSizeValue() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    _sharedPreferences.setDouble("fontSize", this._fontSizeValue) as double;
+    this._fontSizeValue = (await configurationSettings.saveUserSettings(
+        "actionBar", this._fontSizeValue.toString(), userToken)) as double;
     notifyListeners();
   }
 

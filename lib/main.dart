@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     settingsProvier = Provider.of<SettingsProvier>(context);
-    print(settingsProvier.userToken);
+    // print(settingsProvier.userToken);
     return MaterialApp(
       title: 'RPN Calculator',
       theme: ThemeData(
