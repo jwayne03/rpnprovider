@@ -41,8 +41,8 @@ class SettingsProvier extends ChangeNotifier {
 
   // save the state of the actionbar with sharedpreferences
   void saveActionBar() async {
-    this._isActionBarHidden = (await configurationSettings.saveUserSettings(
-        "actionBar", this._isActionBarHidden.toString(), userToken)) as bool;
+    this._isActionBarHidden = (await configurationSettings.updateUserSettings(
+        "actionBar", this._isActionBarHidden.toString())) as bool;
     notifyListeners();
   }
 
@@ -56,8 +56,8 @@ class SettingsProvier extends ChangeNotifier {
   // load state of the trigonometrics if it's hidden or not with sharedpreferences
   void _loadTrigonometricsState() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
-    _sharedPreferences.setBool(
-        "trigonometrics", this._isChangeTheFontSizeActive) as bool;
+    //_sharedPreferences.setBool(
+    //   "trigonometrics", this._isChangeTheFontSizeActive) as bool;
     notifyListeners();
   }
 
