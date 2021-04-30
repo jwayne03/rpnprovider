@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rpn/api/configuration_settings.dart';
 import 'package:rpn/providers/settings_provider.dart';
 import 'package:rpn/view/rpn_calculator.dart';
 import 'package:rpn/view/home_page.dart';
@@ -16,13 +15,10 @@ void main() => runApp(
     );
 
 class MyApp extends StatelessWidget {
-  SettingsProvier settingsProvier;
-  ConfigurationSettings configurationSettings = ConfigurationSettings();
   @override
   Widget build(BuildContext context) {
-    settingsProvier = Provider.of<SettingsProvier>(context);
-
-    print(configurationSettings.getUserSettings().toString());
+    SettingsProvier settingsProvier = Provider.of<SettingsProvier>(context);
+    print("MAIN");
     // print(settingsProvier.userToken);
     return MaterialApp(
       title: 'RPN Calculator',

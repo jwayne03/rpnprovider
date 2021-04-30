@@ -28,7 +28,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("HOME PAGE");
     settingsProvier = Provider.of<SettingsProvier>(context);
+
     Color color = Theme.of(context).primaryColor;
     if (_currentPageIndex == 1 && settingsProvier.isTrigonometricsHidden) {
       setState(() => _currentPageIndex = 0);

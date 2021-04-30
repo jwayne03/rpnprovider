@@ -28,6 +28,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    print("LOGIN");
     settingsProvier = Provider.of<SettingsProvier>(context);
     return Scaffold(
       backgroundColor: Colors.white,

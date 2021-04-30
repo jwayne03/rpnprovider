@@ -11,11 +11,11 @@ class SettingsProvier extends ChangeNotifier {
   String _userToken = "";
 
   SharedPreferences _sharedPreferences;
-  ConfigurationSettings configurationSettings;
 
   // This constructor of calls to the methods of the sharedpreferences and their
   // methods are in private just in case
   SettingsProvier() {
+    print("CONSTRUCTOR");
     this._loadActionBarState();
     this._loadFontSizeState();
     this._loadFontSizeValue();
@@ -32,61 +32,62 @@ class SettingsProvier extends ChangeNotifier {
   }
 
   // Load the state of the actionbar with sharedpreferences
-  void _loadActionBarState() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
+  Future<void> _loadActionBarState() async {
+    print("LOADING USER SETTINGS IN PROVIDER");
+    print(ConfigurationSettings().getUserSettings("actionBar"));
     this._isActionBarHidden =
-        this._sharedPreferences.getBool("actionBar") ?? false;
+        await ConfigurationSettings().getUserSettings("actionBar") == "false";
     notifyListeners();
   }
 
   // save the state of the actionbar with sharedpreferences
-  void saveActionBar() async {
-    this._isActionBarHidden = (await configurationSettings.updateUserSettings(
-        "actionBar", this._isActionBarHidden.toString())) as bool;
-    notifyListeners();
+  Future<void> saveActionBar() async {
+    this._isActionBarHidden = (await ConfigurationSettings().updateUserSettings(
+                "actionBar", this._isActionBarHidden.toString()))
+            .toLowerCase() ==
+        "false";
   }
 
   // GETTER AND SETTER OF TRIGONOMETRICS
   bool get isTrigonometricsHidden => _isTrigonometricsHidden;
   set isTrigonometricsHidden(bool isHidden) {
     this._isTrigonometricsHidden = isHidden;
-    notifyListeners();
   }
 
   // load state of the trigonometrics if it's hidden or not with sharedpreferences
-  void _loadTrigonometricsState() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
+  Future<void> _loadTrigonometricsState() async {
+    this._isTrigonometricsHidden =
+        await ConfigurationSettings().getUserSettings("trigonometrics") ==
+            "true";
     //_sharedPreferences.setBool(
     //   "trigonometrics", this._isChangeTheFontSizeActive) as bool;
-    notifyListeners();
   }
 
   // save the state of trigonometrics with sharedpreferences
-  void saveTrigonometricsState() async {
-    this._isTrigonometricsHidden =
-        (await configurationSettings.saveUserSettings("trigonometrics",
-            this._isTrigonometricsHidden.toString(), userToken)) as bool;
-    notifyListeners();
+  Future<void> saveTrigonometricsState() async {
+    this._isTrigonometricsHidden = (await ConfigurationSettings()
+                .updateUserSettings("trigonometrics",
+                    this._isActionBarHidden ? "true" : "false"))
+            .toLowerCase() ==
+        "true";
   }
 
   // GETTER AND SETTER OF THE FONTSIZE SWITCH
   bool get isChangeTheFontSizeActive => _isChangeTheFontSizeActive;
   set isChangeTheFontSizeActive(bool isActive) {
     _isChangeTheFontSizeActive = isActive;
-    notifyListeners();
   }
 
   // Load the value of the fontsize state with sharedpreferences
-  void _loadFontSizeState() async {
-    notifyListeners();
-  }
+  Future<void> _loadFontSizeState() async {}
 
   // Safe the fontsize state switch with sharedpreferences
-  void saveFontSizeState() async {
-    this._isChangeTheFontSizeActive =
-        (await configurationSettings.saveUserSettings("isFontSizeActive",
-            this._isChangeTheFontSizeActive.toString(), userToken)) as bool;
-    notifyListeners();
+  Future<void> saveFontSizeState() async {
+    this._isChangeTheFontSizeActive = (await ConfigurationSettings()
+                .updateUserSettings(
+                    "actionBar", this._isActionBarHidden ? "true" : "false"))
+            .toLowerCase() ==
+        "true";
   }
 
   // GETTER AND SETTER OF FONTSIZE VALUE
@@ -95,18 +96,16 @@ class SettingsProvier extends ChangeNotifier {
     _fontSizeValue = value;
     SharedPreferences.getInstance()
         .then((value) => value.setDouble("fontSize", fontSizeValue));
-    notifyListeners();
   }
 
   // Save fontsize value with the sharedpreferences
-  void saveFontSizeValue() async {
-    this._fontSizeValue = (await configurationSettings.saveUserSettings(
+  Future<void> saveFontSizeValue() async {
+    this._fontSizeValue = (await ConfigurationSettings().saveUserSettings(
         "actionBar", this._fontSizeValue.toString(), userToken)) as double;
-    notifyListeners();
   }
 
   // Load the fontsize value with the sharedpreferences
-  void _loadFontSizeValue() async {
+  Future<void> _loadFontSizeValue() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._fontSizeValue = this._sharedPreferences.getDouble("fontSize") ?? 16.0;
     notifyListeners();
@@ -120,7 +119,7 @@ class SettingsProvier extends ChangeNotifier {
   }
 
   // Load the color of the color picker with sharedpreferences
-  void _loadCurrentColor() async {
+  Future<void> _loadCurrentColor() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._colorTheme = Color(
         this._sharedPreferences.getInt("color") ?? Colors.lightBlue.value);
@@ -128,7 +127,7 @@ class SettingsProvier extends ChangeNotifier {
   }
 
   // Save color theme with sharedpreferences
-  void saveCurrentColorTheme() async {
+  Future<void> saveCurrentColorTheme() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._sharedPreferences.setInt("color", this._colorTheme.value);
     notifyListeners();
@@ -140,13 +139,13 @@ class SettingsProvier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _loadUserToken() async {
+  Future<void> _loadUserToken() async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._userToken = this._sharedPreferences.getString("token");
     notifyListeners();
   }
 
-  void saveToken(String token) async {
+  Future<void> saveToken(String token) async {
     this._sharedPreferences = await SharedPreferences.getInstance();
     this._sharedPreferences.setString("token", token);
     notifyListeners();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
+import 'package:rpn/api/configuration_settings.dart';
 import 'package:rpn/providers/settings_provider.dart';
 import 'package:rpn/view/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   SettingsProvier settingsProvier;
   SharedPreferences sharedPreferences;
+  ConfigurationSettings configurationSettings;
 
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
@@ -24,6 +26,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    print("SETTINGS");
     settingsProvier = Provider.of<SettingsProvier>(context);
     return Scaffold(
       appBar: settingsProvier.isActionBarHidden

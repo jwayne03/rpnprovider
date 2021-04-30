@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:http/http.dart' as http;
 import 'package:rpn/providers/settings_provider.dart';
@@ -7,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigurationSettings {
   SharedPreferences sharedPreferences;
-  SettingsProvier settingsProvier = SettingsProvier();
 
   // REQUEST METHOD POST
   Future<String> login(String username, String password) async {
@@ -25,21 +23,26 @@ class ConfigurationSettings {
   }
 
   // REQUEST METHOD GET
-  Future<List<dynamic>> getUserSettings() async {
-    var url = Uri.parse('https://api.flx.cat/users/setting');
+  Future<String> getUserSettings(String name) async {
+    print("LOADING USER SETTINGS IN API REQUEST");
+
+    var url = Uri.parse('https://api.flx.cat/users/setting/$name');
     String token =
         'a12e738dbc5949d4658ff8501b5b1f7adfdea976000f64ca3ccba1a4dada9f6094a716e47bde55628076c05a031dc15b6bb325b4e770931b018e98646f32c01a';
     http.Response response = await http.get(url, headers: {
       'accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
+
     if (response.statusCode != 200) {
       print("Error ${response.statusCode}");
       return null;
     }
-    List<dynamic> json = jsonDecode(response.body);
-    print(json);
-    return json;
+
+    Map<String, dynamic> json = jsonDecode(response.body);
+    print(json['value']);
+    print("HAS LLEGADO AQUI");
+    return json['value'];
   }
 
   // REQUEST METHOD POST
@@ -48,16 +51,13 @@ class ConfigurationSettings {
     String a =
         'a12e738dbc5949d4658ff8501b5b1f7adfdea976000f64ca3ccba1a4dada9f6094a716e47bde55628076c05a031dc15b6bb325b4e770931b018e98646f32c01a';
     var url = Uri.parse("https://api.flx.cat/users/setting");
-    http.Response response = await http.post(url,
-        headers: <String, String>{
-          'accept': 'application/json',
-          'Authorization': 'Bearer $a',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(<String, String>{
-          "name": name,
-          "value": value,
-        }));
+    http.Response response = await http.post(url, headers: {
+      'accept': 'application/json',
+      'Authorization': 'Bearer $a',
+    }, body: {
+      "name": name,
+      "value": value,
+    });
 
     print(response.statusCode);
     if (response.statusCode != 200) {
@@ -68,23 +68,27 @@ class ConfigurationSettings {
     }
   }
 
-  Future<void> updateUserSettings(String name, String value) async {
+  Future<String> updateUserSettings(String name, String value) async {
+    print("UPDATE USER SETTINGS");
     String a =
         'a12e738dbc5949d4658ff8501b5b1f7adfdea976000f64ca3ccba1a4dada9f6094a716e47bde55628076c05a031dc15b6bb325b4e770931b018e98646f32c01a';
     var url = Uri.parse("https://api.flx.cat/users/setting/$name");
     http.Response response = await http.patch(url, headers: {
       'accept': 'application/json',
       'Authorization': 'Bearer $a',
-      'Content-Type': 'application/json',
     }, body: {
+      "name": name,
       "value": value,
     });
 
     if (response.statusCode != 200) {
       print(response.statusCode);
+      return this.saveUserSettings(name, value, a);
     } else {
+      Map<String, dynamic> json = jsonDecode(response.body);
       print(response.statusCode);
       print(response.body);
+      return json['value'];
     }
   }
 }
