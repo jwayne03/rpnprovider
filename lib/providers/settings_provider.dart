@@ -36,7 +36,7 @@ class SettingsProvier extends ChangeNotifier {
     print("LOADING USER SETTINGS IN PROVIDER");
     print(ConfigurationSettings().getUserSettings("actionBar"));
     this._isActionBarHidden =
-        await ConfigurationSettings().getUserSettings("actionBar") == "false";
+        await ConfigurationSettings().getUserSettings("actionBar") == "true";
     notifyListeners();
   }
 
@@ -52,34 +52,42 @@ class SettingsProvier extends ChangeNotifier {
   bool get isTrigonometricsHidden => _isTrigonometricsHidden;
   set isTrigonometricsHidden(bool isHidden) {
     this._isTrigonometricsHidden = isHidden;
+    notifyListeners();
   }
 
   // load state of the trigonometrics if it's hidden or not with sharedpreferences
   Future<void> _loadTrigonometricsState() async {
+    print(ConfigurationSettings().getUserSettings("trigonometrics"));
     this._isTrigonometricsHidden =
         await ConfigurationSettings().getUserSettings("trigonometrics") ==
             "true";
-    //_sharedPreferences.setBool(
-    //   "trigonometrics", this._isChangeTheFontSizeActive) as bool;
+    notifyListeners();
   }
 
   // save the state of trigonometrics with sharedpreferences
   Future<void> saveTrigonometricsState() async {
     this._isTrigonometricsHidden = (await ConfigurationSettings()
-                .updateUserSettings("trigonometrics",
-                    this._isActionBarHidden ? "true" : "false"))
+                .updateUserSettings(
+                    "trigonometrics", this._isTrigonometricsHidden.toString()))
             .toLowerCase() ==
-        "true";
+        "false";
   }
 
   // GETTER AND SETTER OF THE FONTSIZE SWITCH
   bool get isChangeTheFontSizeActive => _isChangeTheFontSizeActive;
   set isChangeTheFontSizeActive(bool isActive) {
     _isChangeTheFontSizeActive = isActive;
+    notifyListeners();
   }
 
   // Load the value of the fontsize state with sharedpreferences
-  Future<void> _loadFontSizeState() async {}
+  Future<void> _loadFontSizeState() async {
+    this._isChangeTheFontSizeActive = (await ConfigurationSettings()
+                .updateUserSettings("trigonometrics",
+                    this._isChangeTheFontSizeActive.toString()))
+            .toLowerCase() ==
+        "false";
+  }
 
   // Safe the fontsize state switch with sharedpreferences
   Future<void> saveFontSizeState() async {

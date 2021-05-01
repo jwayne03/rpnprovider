@@ -1,12 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:rpn/providers/settings_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigurationSettings {
-  SharedPreferences sharedPreferences;
-
   // REQUEST METHOD POST
   Future<String> login(String username, String password) async {
     var url = Uri.parse('https://api.flx.cat/users/user/token/refresh');
