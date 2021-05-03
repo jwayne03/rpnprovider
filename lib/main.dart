@@ -16,22 +16,23 @@ void main() => runApp(
 
 class MyApp extends StatelessWidget {
   SettingsProvier settingsProvier;
-  Future<String> _loadUserToken() async {
-    return settingsProvier.userToken;
-  }
 
   @override
   Widget build(BuildContext context) {
     settingsProvier = Provider.of<SettingsProvier>(context);
     print("MAIN");
-    // print(settingsProvier.userToken);
-    return MaterialApp(
-      title: 'RPN Calculator',
-      theme: ThemeData(
-        primaryColor: settingsProvier.colorTheme,
-        accentColor: settingsProvier.colorTheme,
-      ),
-      home: HomePage(),
+    return FutureBuilder<String>(
+      future: settingsProvier.loadUserToken(),
+      builder: (context, AsyncSnapshot<String> snapshot) {
+        return MaterialApp(
+          title: 'RPN Calculator',
+          theme: ThemeData(
+            primaryColor: settingsProvier.colorTheme,
+            accentColor: settingsProvier.colorTheme,
+          ),
+          home: HomePage(),
+        );
+      },
     );
   }
 }

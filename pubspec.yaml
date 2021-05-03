@@ -1,6 +1,6 @@
 name: rpn
 description: RPN Calculator
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -12,11 +12,11 @@ dependencies:
   cupertino_icons: ^1.0.1
   provider: ^5.0.0
   flutter_colorpicker: ^0.3.4
-  shared_preferences: '>=0.5.12+2 <2.0.0'
-  toast : ^0.1.5
-  http: 
+  shared_preferences: ">=0.5.12+2 <2.0.0"
+  toast: ^0.1.5
+  http:
   crypto:
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

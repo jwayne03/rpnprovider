@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("HOME PAGE");
+    print("HOME PAGEasdfasdfasdvSVZSFVZSFVZSFVZSFVZSFVZF");
     settingsProvier = Provider.of<SettingsProvier>(context);
 
     Color color = Theme.of(context).primaryColor;
