@@ -15,9 +15,14 @@ void main() => runApp(
     );
 
 class MyApp extends StatelessWidget {
+  SettingsProvier settingsProvier;
+  Future<String> _loadUserToken() async {
+    return settingsProvier.userToken;
+  }
+
   @override
   Widget build(BuildContext context) {
-    SettingsProvier settingsProvier = Provider.of<SettingsProvier>(context);
+    settingsProvier = Provider.of<SettingsProvier>(context);
     print("MAIN");
     // print(settingsProvier.userToken);
     return MaterialApp(

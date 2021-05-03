@@ -42,6 +42,7 @@ class ConfigurationSettings {
   }
 
   // REQUEST METHOD POST
+  // ignore: missing_return
   Future<String> saveUserSettings(
       String name, String value, String token) async {
     String a =

@@ -46,6 +46,7 @@ class SettingsProvier extends ChangeNotifier {
                 "actionBar", this._isActionBarHidden.toString()))
             .toLowerCase() ==
         "false";
+    this._loadActionBarState();
   }
 
   // GETTER AND SETTER OF TRIGONOMETRICS
@@ -71,6 +72,7 @@ class SettingsProvier extends ChangeNotifier {
                     "trigonometrics", this._isTrigonometricsHidden.toString()))
             .toLowerCase() ==
         "false";
+    this._loadTrigonometricsState();
   }
 
   // GETTER AND SETTER OF THE FONTSIZE SWITCH
@@ -82,41 +84,45 @@ class SettingsProvier extends ChangeNotifier {
 
   // Load the value of the fontsize state with sharedpreferences
   Future<void> _loadFontSizeState() async {
-    this._isChangeTheFontSizeActive = (await ConfigurationSettings()
-                .updateUserSettings("trigonometrics",
-                    this._isChangeTheFontSizeActive.toString()))
-            .toLowerCase() ==
-        "false";
+    print(ConfigurationSettings().getUserSettings("fontSizeState"));
+    this._isChangeTheFontSizeActive =
+        await ConfigurationSettings().getUserSettings("fontSizeState") ==
+            "true";
+    notifyListeners();
   }
 
   // Safe the fontsize state switch with sharedpreferences
   Future<void> saveFontSizeState() async {
     this._isChangeTheFontSizeActive = (await ConfigurationSettings()
-                .updateUserSettings(
-                    "actionBar", this._isActionBarHidden ? "true" : "false"))
+                .updateUserSettings("fontSizeState",
+                    this._isChangeTheFontSizeActive.toString()))
             .toLowerCase() ==
-        "true";
+        "false";
+    this._loadFontSizeState();
   }
 
   // GETTER AND SETTER OF FONTSIZE VALUE
   double get fontSizeValue => _fontSizeValue;
   set fontSizeValue(double value) {
     _fontSizeValue = value;
-    SharedPreferences.getInstance()
-        .then((value) => value.setDouble("fontSize", fontSizeValue));
-  }
-
-  // Save fontsize value with the sharedpreferences
-  Future<void> saveFontSizeValue() async {
-    this._fontSizeValue = (await ConfigurationSettings().saveUserSettings(
-        "actionBar", this._fontSizeValue.toString(), userToken)) as double;
+    notifyListeners();
   }
 
   // Load the fontsize value with the sharedpreferences
   Future<void> _loadFontSizeValue() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    this._fontSizeValue = this._sharedPreferences.getDouble("fontSize") ?? 16.0;
-    notifyListeners();
+    print(ConfigurationSettings().getUserSettings("fontSizeValue"));
+    this._fontSizeValue = double.parse(
+        ((await ConfigurationSettings().getUserSettings("fontSizeValue") ??
+            16.0)));
+  }
+
+  // Save fontsize value with the sharedpreferences
+  Future<void> saveFontSizeValue() async {
+    print(ConfigurationSettings().getUserSettings("fontSizeValue"));
+    this._fontSizeValue = double.parse(((await ConfigurationSettings()
+            .updateUserSettings(
+                "fontSizeValue", this._fontSizeValue.toString()) ??
+        16.0)));
   }
 
   // GETTER AND SETTER OF COLOR THEME (COLOR PICKER)
@@ -128,17 +134,18 @@ class SettingsProvier extends ChangeNotifier {
 
   // Load the color of the color picker with sharedpreferences
   Future<void> _loadCurrentColor() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    this._colorTheme = Color(
-        this._sharedPreferences.getInt("color") ?? Colors.lightBlue.value);
-    notifyListeners();
+    print(ConfigurationSettings().getUserSettings("themeColor"));
+    this._colorTheme = Color(int.parse(
+        (await ConfigurationSettings().getUserSettings("themeColor")) ??
+            Colors.lightBlue.shade100.value));
   }
 
   // Save color theme with sharedpreferences
   Future<void> saveCurrentColorTheme() async {
-    this._sharedPreferences = await SharedPreferences.getInstance();
-    this._sharedPreferences.setInt("color", this._colorTheme.value);
-    notifyListeners();
+    print(ConfigurationSettings().getUserSettings("themeColor"));
+    this._colorTheme = ((await ConfigurationSettings().updateUserSettings(
+            "themeColor", this._colorTheme.value.toString()) ??
+        Colors.lightBlue.shade100.value.toString()) as Color);
   }
 
   String get userToken => _userToken;
